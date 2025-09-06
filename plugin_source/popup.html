@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Claim Judge</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* keep it self-contained */
+    body { margin: 0; font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; width: 380px; }
+    header { padding: 10px 12px; border-bottom: 1px solid #e0e0e0; font-weight: 600; }
+    .wrap { padding: 12px; }
+    label { display:block; margin-top:8px; font-weight:600; }
+    select, input[type="text"], textarea { width:100%; box-sizing:border-box; padding:8px; margin-top:4px; }
+    textarea { height: 110px; resize: vertical; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .btn { display:inline-block; padding:8px 10px; border-radius:6px; border:1px solid #ccc; background:#fafafa; cursor:pointer; margin-top:10px; }
+    .btn.primary { background:#111; color:#fff; border-color:#111; }
+    .muted { color:#666; font-size:12px; margin-top:6px; }
+    .result { margin-top:12px; padding:10px; border:1px solid #ddd; border-radius:8px; background:#fcfcfc; white-space:pre-wrap; }
+    .badge { display:inline-block; padding:2px 6px; border-radius:999px; font-size:12px; font-weight:700; }
+    .true { background:#e6f4ea; color:#0f9d58; }
+    .false { background:#fde7e9; color:#d93025; }
+    .uncertain { background:#fff4e5; color:#c25e00; }
+    .error { color:#d93025; }
+    .toolbar { display:flex; gap:8px; align-items:center; justify-content:space-between; }
+    a.small { font-size:12px; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <header>Claim Judge</header>
+  <div class="wrap">
+    <div class="toolbar">
+      <div>
+        <label for="provider">Provider</label>
+        <select id="provider">
+          <option value="anthropic">Anthropic</option>
+          <option value="gemini">Gemini</option>
+          <option value="huggingface">Custom (Hugging Face)</option>
+        </select>
+      </div>
+      <div>
+        <label for="model">Model</label>
+        <input id="model" type="text" placeholder="auto (optional)">
+      </div>
+    </div>
+
+    <label for="text">Selected text</label>
+    <textarea id="text" placeholder="Select text on the page or paste here"></textarea>
+
+    <div class="row">
+      <div>
+        <label for="speaker">Speaker (optional)</label>
+        <input id="speaker" type="text" placeholder="e.g., John Doe">
+      </div>
+      <div>
+        <label for="context">Context (optional)</label>
+        <input id="context" type="text" placeholder="e.g., 2021-05-11, tweet">
+      </div>
+    </div>
+
+    <button id="analyze" class="btn primary">Analyze</button>
+    <button id="useSelection" class="btn">Use current page selection</button>
+    <div class="muted">
+      Keys live in <a class="small" href="#" id="openOptions">Options</a>.
+    </div>
+
+    <div id="output" class="result" hidden></div>
+  </div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

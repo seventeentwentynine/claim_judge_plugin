@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Claim Judge — Options</title>
+  <style>
+    :root {
+      --fg:#111; --muted:#555; --bd:#ddd; --bg:#fff; --ok:#0a7; --warn:#b60; --err:#c22;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--fg); background: var(--bg);
+      max-width: 760px; margin: 32px auto; padding: 0 16px;
+    }
+    h1 { font-size: 20px; margin: 0 0 12px; }
+    p.muted { color: var(--muted); margin: 4px 0 20px; }
+    .card {
+      border: 1px solid var(--bd); border-radius: 10px; padding: 16px; margin: 14px 0;
+    }
+    .card h2 { font-size: 16px; margin: 0 0 12px; }
+    label { display: block; font-weight: 600; margin-top: 10px; }
+    .input-wrap {
+      position: relative; margin-top: 6px;
+    }
+    input[type="password"], input[type="text"] {
+      width: 100%; padding: 10px 84px 10px 10px; border: 1px solid var(--bd);
+      border-radius: 8px; font: inherit;
+    }
+    .right-controls {
+      position:absolute; inset:0 6px 0 auto; display:flex; gap:6px; align-items:center; pointer-events:none;
+    }
+    .right-controls button, .right-controls .status-dot {
+      pointer-events: auto;
+    }
+    .tiny-btn {
+      font: 12px/1.2 inherit; padding: 6px 8px; border: 1px solid var(--bd);
+      background: #f7f7f7; border-radius: 6px; cursor: pointer;
+    }
+    .tiny-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .status {
+      font-size: 12px; margin-top: 6px;
+    }
+    .status.ok { color: var(--ok); }
+    .status.warn { color: var(--warn); }
+    .status.err { color: var(--err); }
+    .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .actions {
+      display:flex; gap:10px; margin-top: 14px;
+    }
+    .btn {
+      padding: 10px 12px; border: 1px solid var(--bd); border-radius: 8px; cursor: pointer;
+      background: #111; color: #fff;
+    }
+    .btn.secondary { background: #f7f7f7; color: #111; }
+    #toast { margin-top: 10px; color: var(--muted); min-height: 1.2em; }
+    code { background:#f4f4f4; padding: 2px 6px; border-radius: 4px; }
+    @media (max-width:700px) { .grid-2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>Claim Judge — Options</h1>
+  <p class="muted">Keys are stored locally via <code>browser.storage.local</code> on this device.</p>
+
+  <section class="card">
+    <h2>Anthropic</h2>
+    <label for="anthropic">API Key</label>
+    <div class="input-wrap">
+      <input id="anthropic" type="password" placeholder="sk-ant-..." autocomplete="off" />
+      <div class="right-controls">
+        <button type="button" class="tiny-btn" data-toggle="anthropic">Show</button>
+        <button type="button" class="tiny-btn" id="clearAnthropic">Clear</button>
+      </div>
+    </div>
+    <div id="anthropicStatus" class="status"></div>
+  </section>
+
+  <section class="card">
+    <h2>Gemini</h2>
+    <div class="grid-2">
+      <div>
+        <label for="gemini">API Key</label>
+        <div class="input-wrap">
+          <input id="gemini" type="password" placeholder="AIza..." autocomplete="off" />
+          <div class="right-controls">
+            <button type="button" class="tiny-btn" data-toggle="gemini">Show</button>
+            <button type="button" class="tiny-btn" id="clearGemini">Clear</button>
+          </div>
+        </div>
+        <div id="geminiStatus" class="status"></div>
+      </div>
+      <div>
+        <p class="muted" style="margin-top: 28px;">
+          Used by the “Gemini” provider. Keep this key secret.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Custom (Hugging Face)</h2>
+    <div class="grid-2">
+      <div>
+        <label for="hfKey">API Token (optional)</label>
+        <div class="input-wrap">
+          <input id="hfKey" type="password" placeholder="hf_********************************" autocomplete="off" />
+          <div class="right-controls">
+            <button type="button" class="tiny-btn" data-toggle="hfKey">Show</button>
+            <button type="button" class="tiny-btn" id="clearHFKey">Clear</button>
+          </div>
+        </div>
+        <div id="hfKeyStatus" class="status"></div>
+      </div>
+      <div>
+        <label for="hfModel">Model ID</label>
+        <div class="input-wrap">
+          <input id="hfModel" type="text" value="maskitplugin/finetuned_roberta" placeholder="org-or-user/model-name" />
+          <div class="right-controls">
+            <button type="button" class="tiny-btn" id="clearHFModel">Reset</button>
+          </div>
+        </div>
+        <div id="hfModelStatus" class="status"></div>
+      </div>
+    </div>
+    <p class="muted">Public models may work without a token, but rate limits and cold starts apply. A token is recommended.</p>
+  </section>
+
+  <div class="actions">
+    <button id="save" class="btn">Save</button>
+    <button id="clearAll" class="btn secondary">Clear All</button>
+  </div>
+  <div id="toast" aria-live="polite"></div>
+
+  <script src="options.js" defer></script>
+</body>
+</html>

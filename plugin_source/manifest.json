@@ -1,0 +1,45 @@
+{
+  "manifest_version": 2,
+  "name": "Claim Judge — Anthropic, Gemini & HuggingFace",
+  "version": "0.1.4",
+  "description": "Select text, choose Anthropic, Gemini, or a custom Hugging Face model, and get a verdict with reasoning.",
+
+  "browser_action": {
+    "default_title": "Judge selection",
+    "default_popup": "popup.html"
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "notifications",
+    "tabs",
+
+    "https://api.anthropic.com/*",
+    "https://generativelanguage.googleapis.com/*",
+    "https://huggingface.co/*",
+    "https://cdn-lfs.huggingface.co/*",
+    "https://cdn.jsdelivr.net/*"
+  ],
+
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+
+
+  "content_security_policy":
+    "script-src 'self' https://cdn.jsdelivr.net 'unsafe-eval' 'wasm-unsafe-eval'; object-src 'self'",
+
+  "applications": {
+    "gecko": {
+      "id": "claim-judge@example.com",
+      "strict_min_version": "89.0"
+    }
+  }
+}
